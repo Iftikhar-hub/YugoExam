@@ -5,9 +5,11 @@
         "divisibleby",
         "floatformat",
         "forloop",
+        "pycache",
         "studentexam",
         "stylesheet",
         "subjectivequestion",
+        "venv",
         "yourapp"
     ]
 }
