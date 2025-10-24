@@ -1,0 +1,451 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7f6;
+}
+
+.navbar {
+    background-color: #414c56;
+    padding: 0.8rem 1.5rem;
+    border-bottom: 1px solid #e3e6f0;
+    color: white;
+    height: 30px;
+    /* position: fixed; */
+    /* width: 97%; */
+    z-index: 1000;
+
+}
+
+
+
+.fa-solid.fa-caret-down {
+    font-size: 20px;
+    color: white;
+    font-family: "Font Awesome 6 Free";
+    font-weight: bold;
+}
+
+.container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 42px;
+    margin-top: -7px;
+
+}
+
+.navbar-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 35px;
+
+}
+
+.fas.fa-bars {
+    padding-left: 83px;
+    cursor: pointer;
+}
+
+.icons {
+    padding-right: 12px;
+}
+
+.nav-item.dropdown {
+    display: flex;
+    align-items: center;
+}
+
+a.pSetting {
+    padding-right: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.pSetting img {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: white;
+    /* Color of your title */
+    text-decoration: none;
+}
+
+#sidebarToggle {
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 1.25rem;
+}
+
+#sidebarToggle:hover {
+    color: #4e73df;
+}
+
+.teacher-name {
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+}
+
+.nav-link {
+    color: white;
+    margin-right: 1rem;
+    display: flex;
+}
+
+.nav-link:hover {
+    color: #4e73df;
+}
+
+.navbar-nav .nav-item .dropdown-toggle {
+    cursor: pointer;
+}
+
+/* Ensure dropdown is positioned correctly and initially hidden */
+
+/* Ensure dropdown is positioned correctly and initially hidden */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    /* Show the dropdown just below the button */
+    right: 0;
+    background-color: #414c56;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    display: none;
+    margin-top: 13px;
+    border-radius: 0px 0px 10px 10px;
+    /* Initially hidden */
+}
+
+.dropdown-item {
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-item:hover {
+    color: rgb(255 146 0);
+}
+
+.dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.examContainer {
+    display: flex;
+}
+
+
+
+
+/* Style for the question content section */
+.questioncontent {
+    display: flex;
+    /* justify-content: space-evenly; */
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+    background-color: #f9f9f9;
+    /* Light background for contrast */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.addExam {
+    margin-left: 3rem;
+}
+
+#id_question_text {
+    width: 26rem;
+    padding-bottom: 1rem;
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+#id_reference_answer {
+    width: 26rem;
+    padding-bottom: 10rem;
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.Form-control {
+    margin-top: 16px;
+}
+
+#id_option_a,
+#id_option_b,
+#id_option_c,
+#id_option_d {
+    width: 17rem;
+    height: 1.5rem;
+}
+
+#id_correct_option {
+    width: 14.8rem;
+    height: 1.5rem;
+    ;
+}
+
+#btn {
+    margin-top: 3rem;
+    height: 3rem;
+    background-color: rgb(37 44 52);
+    color: #ffffff;
+    font-size: 16px;
+}
+
+#backBtn {
+    background-color: rgb(37 44 52);
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+#btn:hover,
+#backBtn:hover {
+    background-color: rgb(255 146 0);
+    text-decoration: none;
+}
+
+.addedExam {
+    margin-left: 20rem;
+}
+
+/* Heading style */
+.questioncontent h1 {
+    font-size: 24px;
+    color: #333333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Form style */
+.questioncontent form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.questioncontent button {
+    background-color: #28a745;
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.questioncontent button:hover {
+    background-color: #218838;
+}
+
+/* Question list style */
+.questioncontent ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.questioncontent li {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.questioncontent li:nth-child(odd) {
+    background-color: #f1f1f1;
+}
+
+/* Back to dashboard link */
+.questioncontent a {
+    display: inline-block;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.questioncontent a:hover {
+    text-decoration: underline;
+}
+
+
+
+.sidebar {
+    width: 250px;
+    /* height: 100vh; */
+    background-color: #2c3e50;
+    /* position: fixed; */
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    margin-top: -1px;
+    transition: width 0.5s ease;
+    z-index: 1;
+}
+
+
+.sidebar.collapsed {
+    width: 0;
+    /* Hidden state */
+    overflow: hidden;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}
+
+.teacher-data {
+    color: blanchedalmond;
+}
+
+.sidebar-header img.profile-picture {
+    width: 80px;
+    height: 77px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    /* margin-bottom: 2rem; */
+}
+
+.sidebar-header h3 {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.sidebar-header p {
+    margin-top: 5px;
+    font-size: 14px;
+    font-style: italic;
+    color: #bdc3c7;
+}
+
+hr {
+    width: 240px;
+    border: 1px solid rgb(255 146 0);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-menu li {
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    transition: background 0.3s ease;
+}
+
+.sidebar-menu li a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-menu li a i.fa-solid.fa-arrow-down {
+    padding-left: 100px;
+    font-size: 13px;
+}
+
+.sidebar-menu li a i.fa-solid.fa-solid.fa-arrow-up {
+    padding-left: 100px;
+    font-size: 13px;
+}
+
+/* Style for the hidden exam dropdown */
+.dropdown-box {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    /* background-color: #f9f9f9; */
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    max-height: 0;
+    /* Initially collapsed */
+}
+
+.dropdown-box li a {
+    padding: 0px 20px;
+    display: block;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-box.open li a:hover {
+    color: #f0f0f0;
+    /* background-color: #415563; */
+}
+
+/* Style for when the Exam dropdown is open */
+.dropdown-box.open {
+    max-height: 300px;
+    margin-top: 16px;
+    /* background-color: #415563; */
+    /* Max height when expanded (adjust as needed) */
+}
+
+.dropdown-box.open li a {
+    color: #a0a59b;
+}
+
+.dropdown-box.open li {
+    padding: 8px 14px;
+}
+
+.sidebar-menu li a i {
+    margin-right: 15px;
+    color: rgb(255 146 0);
+}
+
+.sidebar-menu li:hover {
+    background-color: #34495e;
+}
+
+.footer {
+    background-color: #fff;
+    color: black;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    /* margin-left: 250px; */
+    overflow: hidden;
+}
+
+/* .footer-content p {
+    margin: ;
+} */

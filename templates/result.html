@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Results</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/results.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Exam Results</h1>
+
+        {% if student_exams %}
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Exam Title</th>
+                        <th>Subject</th>
+                        <th>Obtained Marks</th>
+                        <th>Total Marks</th>
+                        <th>Status</th>
+                        <th>View</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exam in student_exams %}
+                    <tr>
+                        <td>{{ exam.exam_title }}</td>
+                        <td>{{ exam.subject }}</td>
+                        <td>{{ exam.obtained_marks }}</td>
+                        <td>{{ exam.total_marks }}</td>
+                        <td>
+                            {% if exam.obtained_marks >= exam.exam.passing_marks %}
+                                <span class="status passed">Passed</span>
+                            {% else %}
+                                <span class="status failed">Failed</span>
+                            {% endif %}
+                        </td>
+                        <td> <button onclick="loadAnalysis('{{ exam.exam.id }}','{{ exam.exam.exam_type }}')">View Analysis</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>You have not taken any exams yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Analysis Section -->
+ <div id="analysis-section" style="margin-top: 40px; display: none;">
+    
+     <h2 style=" color:rgb(255 146 0);font-size: 1.7rem;">Exam Analysis </h2>
+     <p style=" color:rgb(255 146 0);"><strong>Satisfied:</strong> <span id="correct-count">0</span></p>
+     <p style=" color:rgb(255 146 0);"><strong>Need Improvement:</strong> <span id="incorrect-count">0</span></p>
+
+     <!-- Charts Section -->
+     <div style="display: flex; gap: 12rem; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
+      <div style="flex: 1; min-width: 300px; max-width: 500px;">
+          <h3 style="text-align: center;">Answer Accuracy (Percentage)</h3>
+          <canvas id="correct-incorrect-chart" height="250"></canvas>
+      </div>
+      <div style="flex: 1; min-width: 300px; max-width: 500px;">
+          <h3 style="text-align: center;">Topic Distribution</h3>
+          <canvas id="topic-distribution-chart" height="250"></canvas>
+      </div>
+   </div>
+
+
+     <!-- Results Table -->
+     <table class="results-table" style="margin-top: 40px;">
+         <thead>
+             <tr>
+                 <th>Question</th>
+                 <th>Your Answer</th>
+                 <th>Correct Answer</th>
+                 <th>Status</th>
+                 <th>Topic</th>
+             </tr>
+         </thead>
+          <tbody id="results-body">
+             <!-- JavaScript will inject rows here -->
+          </tbody>
+      </table>
+ </div>
+
+
+   
+    <a href="{% url 'student_dashboard' %}" class="back-to-dashboard">Back to Student Dashboard</a>
+
+    <!-- Load analysis script -->
+    <script src="{% static 'js/results.js' %}"></script>
+</body>
+</html>

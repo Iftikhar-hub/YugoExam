@@ -1,0 +1,195 @@
+/* Default light mode styles */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.question-box {
+    background: #e9ecef;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.options label {
+    display: block;
+    margin: 5px 0;
+}
+
+.question-box textarea {
+    width: 60%;
+    height: 20vh;
+    padding: 10px;
+    /* Adds space inside the textarea */
+    text-align: left;
+    vertical-align: top;
+    resize: none;
+
+}
+
+
+.submit-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.submit-btn:hover {
+    background: #0056b3;
+}
+
+/* Dark mode styles */
+.dark-mode {
+    background-color: #222;
+    color: #ddd;
+}
+
+.dark-mode .container {
+    background: #333;
+    color: #ddd;
+}
+
+.dark-mode .question-box {
+    background: #444;
+}
+
+.dark-mode .submit-btn {
+    background: #28a745;
+}
+
+.dark-mode .submit-btn:hover {
+    background: #1e7e34;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    background: #ffcc00;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.theme-toggle-btn:hover {
+    background: #e6b800;
+}
+
+
+/* Timer Container */
+.timer-container {
+    display: flex;
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    background: rgb(255 146 0);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+/* Timer Circles */
+.circle {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+circle {
+    fill: none;
+    stroke-width: 6;
+    stroke: #ccc;
+    cx: 50;
+    cy: 50;
+    r: 30;
+    stroke-dasharray: 184;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+}
+
+#minutes-circle, #subjective-minutes-circle {
+    stroke: #ff4500;
+}
+
+#seconds-circle, #subjective-seconds-circle {
+    stroke: #007bff;
+}
+
+/* Timer Labels */
+.label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+}
+
+small {
+    display: block;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+/* Dark Mode */
+.dark-mode .timer-container {
+    background: #222;
+}
+
+.dark-mode #minutes-circle {
+    stroke: #ff7300;
+}
+
+.dark-mode #seconds-circle {
+    stroke: #1e90ff;
+}
+
+
+/* Camera Container - Fixed at Bottom Right */
+#camera-container {
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+    background: rgb(255 146 0);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+#camera-container video {
+    width: 150px;
+    height: auto;
+    border-radius: 8px;
+}

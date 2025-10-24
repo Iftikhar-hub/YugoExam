@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Results</title>
+
+</head>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/exam_results.css' %}">
+
+
+<body>
+    <div class="container">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-success" style="color: green; font-weight: bold;">
+                {{ message }}
+            </div>
+          {% endfor %}
+       {% endif %}
+
+        <h1 class="text-center">Exam Results</h1>
+
+        <!-- Exam Details -->
+        <div class="card">
+            <h2>{{ exam.exam_title }}</h2>
+            <p><strong>Subject:</strong> {{ exam.subject.name }}</p>
+            <p><strong>Exam Type:</strong> {{ exam.get_exam_type_display }}</p>
+            <p><strong>Total Marks:</strong> {{ exam.total_marks }}</p>
+            <p><strong>Passing Marks:</strong> {{ exam.passing_marks }}</p>
+        </div>
+
+        <!-- Student Details -->
+        <div class="card">
+            <h3>Student Details</h3>
+            <p><strong>Student Name:</strong> {{ student_exam.student.get_full_name }}</p>
+            <p><strong>Obtained Marks:</strong> {{ student_exam.obtained_marks }}</p>
+            <p><strong>Percentage:</strong>
+                {{ student_exam.obtained_marks|floatformat:2 }} / {{ exam.total_marks|floatformat:2 }}
+            </p>
+            <p><strong>Percentage:</strong> {{ percentage }}%</p>
+
+           {% if student_exam.obtained_marks >= exam.passing_marks %}
+           <p class="status passed">✅ Status: Passed</p>
+           {% else %}
+           <p class="status failed">❌ Status: Failed</p>
+           {% endif %}
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center">
+            <a href="{% url 'student_dashboard' %}" class="btn btn-primary">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+
+</html>

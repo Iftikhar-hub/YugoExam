@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Student Login - YugoExam{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/student_login.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<section class="gradient-custom">
+    <div class="container">
+        <div class="uperBox">
+            <div class="box_c1">
+                <div class="card-body p-5 text-center">
+                    <div class="m">
+                        <div class="loginn">
+                            <h2 class="text-white mb-2 text-uppercase">Student Login</h2>
+                        </div>
+                        <p>Please enter your email and password!</p>
+
+                        <!-- Display error messages -->
+                        {% if messages %}
+                        <div class="alert alert-danger" role="alert">
+                            {% for message in messages %}
+                            <div class="error-message">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <!-- Login form -->
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="inputFields">
+                                <input type="email" id="typeEmailX" name="email" placeholder="Email" required />
+                            </div>
+                            <div class="inputFields">
+                                <input type="password" id="typePasswordX" name="password" placeholder="Password"
+                                    required />
+                                <i class="far fa-eye" id="togglePassword" style="cursor: pointer;"></i>
+                            </div>
+                            <div class="checkboxx">
+                                <div class="form-group">
+                                    <input type="checkbox" id="terms" name="terms">
+                                    <label for="terms">Remember Me</label>
+                                </div>
+
+                                <!-- Forgot password link -->
+                                <div class="form-group">
+                                    <a href="#" class="forgot-password">Forgot Password?</a>
+                                </div>
+                            </div>
+                            <button class="btnsub" type="submit">Login</button>
+                        </form>
+
+                        <div class="dhaccount">
+                            <p class="mb-0">Don't have an account? <a href="{% url 'teacher_register' %}"
+                                    class="text-blue-50 fw-bold">Sign Up</a></p>
+                        </div>
+                        <div class="social-login">
+                            <p>Or register with:</p>
+                            <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon google"><i class="fab fa-google"></i></a>
+                            <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="{% static 'js/student_login.js' %}"></script>
+{% endblock %}

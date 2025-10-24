@@ -1,0 +1,90 @@
+.nb {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgb(37 44 52);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav .navbar {
+    background-color: white;
+}
+
+.leftnav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: white;
+    margin-left: 60rem;
+}
+
+.dropdown{
+    padding-right: 12px;
+
+}
+
+#btn-signup {
+    margin-right: 14px;
+    background-color: rgb(255 146 0);
+    color: white;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 19px;
+}
+
+/* .navbar-brand {
+    color: rgb(255 146 0);
+} */
+#about,
+#home,
+#contact {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: white;
+}
+
+#about:hover,
+#home:hover,
+#contact:hover {
+    font-size: 18px;
+    color: rgb(255 146 0);
+}
+
+/* .nav-link:hover {
+    font-size: 18px;
+    color:rgb(255 146 0) ;
+}
+.nav-link,
+#home:hover {
+    font-size: 18px;
+    color:rgb(255 146 0) ;
+} */
+
+.navbar #navbarSupportedContent {
+    padding-top: 10px;
+    padding-left: 40px;
+
+}
+
+#yugo {
+    font-family: 'Poppins', sans-serif;
+    color: rgb(255 146 0);
+    font-weight: bold;
+}
+
+#exam {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    font-weight: bold;
+}
+
+.dropdown-item {
+    color: black;
+}
+
+.dropdown-item:hover {
+    color: rgb(255 146 0);
+}

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Questions for {{ exam.exam_title }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/create_questions.css' %}">
+    <link rel="stylesheet" href="{% static 'css/view_questions.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="navv">
+
+
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="leftNavbar">
+                    <!-- Left: Dashboard Title -->
+                    <a class="navbar-brand" href="#">OnlineExam</a>
+
+                    <!-- Expand/Collapse Icon for Sidebar -->
+                    <!-- <button class="btn btn-primary" id="sidebarToggle"> -->
+                    <i id="toggleSidebar" class="fas fa-bars"></i>
+                    </button>
+                </div>
+
+                <!-- Right: Notification, Profile Picture, Teacher Name, Dropdown -->
+                <!-- <div class="rightNavbar"> -->
+
+                <ul class="navbar-nav">
+                    <div class="icons">
+                        <!-- Notification Icon -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="notificationDropdown" role="button" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="badge bg-danger">3</span>
+                            </a>
+                        </li>
+                    </div>
+
+                    <!-- Profile Picture, Teacher Name, and Dropdown -->
+                    <div class="profile">
+                        <li class="nav-item dropdown">
+                            <a class="pSetting" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static 'img/default_profile_pic.png' %}{% endif %}"
+                                    alt="Teacher Profile">
+                                <span class="teacher-name ms-2">{{ user.first_name }}</span>
+                            </a>
+                        </li>
+                    </div>
+                    <div class="dropdown">
+                        <!-- Button to trigger the dropdown -->
+                        <button class="dropdown-toggle" id="profileDropdown" aria-expanded="false">
+                            <i class="fa-solid fa-caret-down"></i> </button>
+
+                        <ul class="dropdown-menu" id="dropdownMenu">
+                            <li><a class="dropdown-item" href="#">Profile Settings</a></li>
+                            <li><a class="dropdown-item" style="color: #e74c3c;"
+                                    href="{% url 'teacher_login' %}">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </ul>
+
+                <!-- </div> -->
+            </div>
+        </nav>
+    </div>
+
+    <div class="examContainer">
+        <div class="sidebar" style="height: 100vh;">
+            <div class="sidebar-header">
+                {% if user.profile_picture %}
+                <img src="{{ user.profile_picture.url }}" alt="{{ user.first_name }}'s picture" class="profile-picture">
+                {% else %}
+                <img src="{% static 'default-profile.png' %}" alt="Default profile picture" class="profile-picture">
+                {% endif %}
+                <div class="teacher-data">
+                    <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                    <p> <i class="fa-regular fa-circle-user" style="color: rgb(255 146 0);"></i> Teacher</p>
+                </div>
+            </div>
+            <hr>
+            <ul class="sidebar-menu">
+                <li><a href="{% url 'teacher_dashboard' %}" id="dashboardLink"> <i
+                            class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+                <li><a href="#" id="examsToggle"><i class="fas fa-file-alt"></i> Exams
+                        <i id="examsArrow" class="fa-solid fa-arrow-down"></i></a>
+                    <ul class="dropdown-box" id="examsDropdown" style="display: none;">
+                        <li><a href="#" id="createExamLink">Create Exam</a></li>
+                        <li><a href="#" id="questionBankToggle">Question Bank</a></li>
+                        <li><a href="#">Schedule Exam</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" id="coursesLink"><i class="fas fa-book"></i> Courses</a></li>
+                <li><a href="#"><i class="fas fa-user-graduate"></i> Students</a></li>
+                <li><a href="#"><i class="fas fa-poll"></i> Results</a></li>
+                <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+        </div>
+
+        <div class="seeQuestion">
+            <h2> {{ exam.exam_title }} {{ exam.subject.name }}</h2>
+
+            {% if mcq_page_obj %}
+                <div class="mcq-section">
+                    <h3>Multiple Choice Questions</h3>
+                    <p><strong>Question:</strong> {{ mcq_page_obj.object_list.0.question_text }}</p>
+                    <ul>
+                        <li {% if mcq_page_obj.object_list.0.correct_option == 1 %}
+                            style="color: green; font-weight: bold;" {% endif %}>
+                            a) {{ mcq_page_obj.object_list.0.option_a }}
+                        </li>
+                        <li {% if mcq_page_obj.object_list.0.correct_option == 2 %}
+                            style="color: green; font-weight: bold;" {% endif %}>
+                            b) {{ mcq_page_obj.object_list.0.option_b }}
+                        </li>
+                        <li {% if mcq_page_obj.object_list.0.correct_option == 3 %}
+                            style="color: green; font-weight: bold;" {% endif %}>
+                            c) {{ mcq_page_obj.object_list.0.option_c }}
+                        </li>
+                        <li {% if mcq_page_obj.object_list.0.correct_option == 4 %}
+                            style="color: green; font-weight: bold;" {% endif %}>
+                            d) {{ mcq_page_obj.object_list.0.option_d }}
+                        </li>
+                    </ul>
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if mcq_page_obj.has_previous %}
+                            <a href="?mcq_page=1">&laquo; first</a>
+                            <a href="?mcq_page={{ mcq_page_obj.previous_page_number }}">previous</a>
+                            {% endif %}
+                            {% if mcq_page_obj.has_next %}
+                            <a href="?mcq_page={{ mcq_page_obj.next_page_number }}">next</a>
+                            <a href="?mcq_page={{ mcq_page_obj.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                  
+                 </div>
+            {% elif not subjective_page_obj %}
+               <p>No multiple choice questions found for this exam.</p>
+            {% endif %}
+
+            {% if subjective_page_obj %}
+             <div class="subjective-section">
+                <h3>Subjective Questions</h3>
+                <p><strong>Question:</strong> {{ subjective_page_obj.object_list.0.question_text }}</p>
+
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if subjective_page_obj.has_previous %}
+                        <a href="?subjective_page=1">&laquo; first</a>
+                        <a href="?subjective_page={{ subjective_page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
+                        {% if subjective_page_obj.has_next %}
+                        <a href="?subjective_page={{ subjective_page_obj.next_page_number }}">next</a>
+                        <a href="?subjective_page={{ subjective_page_obj.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                 </div>
+               
+             
+             {% else %}
+                <p>No subjective questions found for this exam.</p>
+             {% endif %}
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2024 OnlineExam. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/teacher_dashboard.js' %}"></script>
+</body>
+
+</html>

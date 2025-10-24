@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/student_profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="{% static 'image/logo.jpg' %}" type="image/x-icon">
+</head>
+<body>
+    <div class="navv">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="leftNavbar">
+                    <!-- Left: Dashboard Title -->
+                    <a class="navbar-brand" href="#">OnlineExam</a>
+    
+                    <!-- Expand/Collapse Icon for Sidebar -->
+                    <!-- <button class="btn btn-primary" id="sidebarToggle"> -->
+                    <i id="toggleSidebar" class="fas fa-bars"></i>
+                    </button>
+                </div>
+    
+                <!-- Right: Notification, Profile Picture, Teacher Name, Dropdown -->
+                <!-- <div class="rightNavbar"> -->
+    
+                <ul class="navbar-nav">
+                    <div class="icons">
+                        <!-- Notification Icon -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="notificationDropdown" role="button" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="badge bg-danger">3</span>
+                            </a>
+                        </li>
+                    </div>
+    
+                    <!-- Profile Picture, Teacher Name, and Dropdown -->
+                    <div class="profile">
+                        <li class="nav-item dropdown">
+                            <a class="pSetting" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {% load static %}
+                                <img src="{% if user.student.profile_picture %}{{ user.student.profile_picture.url }}{% else %}{% static 'img/default_profile_pic.png' %}{% endif %}"
+                                    alt="Teacher Profile">
+                                <span class="teacher-name ms-2">{{ user.student.first_name }}</span>
+                            </a>
+                        </li>
+                    </div>
+                    <div class="dropdown">
+                        <!-- Button to trigger the dropdown -->
+                        <button class="dropdown-toggle" id="profileDropdown" aria-expanded="false">
+                            <i class="fa-solid fa-caret-down"></i> </button>
+    
+                        <ul class="dropdown-menu" id="dropdownMenu">
+                            <li><a class="dropdown-item" href="#">Profile Settings</a></li>
+                            <li><a class="dropdown-item" style="color: #e74c3c;" href="{% url 'student_login' %}">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+    
+                </ul>
+    
+                <!-- </div> -->
+            </div>
+        </nav>
+    </div>
+    
+    <div class="profile-container">
+        <h2>Update Your Profile</h2>
+    
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    
+        <form method="POST" enctype="multipart/form-data" class="profile-form">
+            {% csrf_token %}
+
+            <h3 class="section-heading">Profile Picture</h3>
+            <div class="profile-picture-box">
+                {% if user.student.profile_picture %}
+                <img src="{{ user.student.profile_picture.url }}" alt="Profile Picture">
+                {% endif %}
+                <div class="form-group">
+                    {{ profile_form.profile_picture.label_tag }}
+                    {{ profile_form.profile_picture }}
+                </div>
+            </div>
+    
+            <!-- Account Information -->
+            <h3 class="section-heading">Account Information</h3>
+            <div class="form-group">
+                {{ user_form.username.label_tag }}
+                {{ user_form.username }}
+            </div>
+            <div class="form-group">
+                {{ user_form.email.label_tag }}
+                {{ user_form.email }}
+            </div>
+    
+            <!-- Profile Information -->
+            <h3 class="section-heading">Profile Information</h3>
+            <div class="form-group">
+                {{ profile_form.first_name.label_tag }}
+                {{ profile_form.first_name }}
+            </div>
+            <div class="form-group">
+                {{ profile_form.last_name.label_tag }}
+                {{ profile_form.last_name }}
+            </div>
+            <div class="form-group">
+                {{ profile_form.phone.label_tag }}
+                {{ profile_form.phone }}
+            </div>
+            <div class="form-group">
+                {{ profile_form.gender.label_tag }}
+                {{ profile_form.gender }}
+            </div>
+            <div class="form-group">
+                {{ profile_form.department.label_tag }}
+                {{ profile_form.department }}
+            </div>
+            <div class="form-group">
+                {{ profile_form.semester.label_tag }}
+                {{ profile_form.semester }}
+            </div>
+    
+            <!-- Subjects -->
+            <h3 class="section-heading">Subjects</h3>
+            <div class="subjects-box">
+                <label>Enrolled Subjects:</label>
+                <div class="subject-list">
+                    {% for subject in profile_form.subjects %}
+                    {% if subject.choice_label.semester == student.semester %}
+                    <label>
+                        {{ subject.tag }} {{ subject.choice_label.name }}
+                    </label>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+    
+            <!-- Profile Picture -->
+            
+    
+            <!-- Submit -->
+            <div class="submit-btn">
+                <button type="submit">Save Changes</button>
+                <a href="{% url 'student_dashboard' %}" class="btn btn-secondary" style="margin-left: 10px;">Back to Dashboard</a>
+            </div>
+        </form>
+    </div>
+
+
+    
+</body>
+</html>

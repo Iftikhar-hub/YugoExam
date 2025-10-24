@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    padding: 0;
+
+}
+
+.editExam {
+    margin-top: 25px;
+    margin-left: 35px;
+}
+
+form {
+    display: grid;
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+}
+
+#multipleExamContent input,
+select {
+    width: 13rem;
+    height: 26px;
+}
+
+#multipleExamContent select {
+    width: 13.5rem;
+    height: 30px;
+}
+
+form button.btn.btn-primary {
+    display: grid;
+    height: 3rem;
+    margin-top: 19px;
+    justify-content: center;
+    align-items: center;
+}

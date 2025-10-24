@@ -1,0 +1,812 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7f6;
+}
+
+.navbar {
+    background-color: #414c56;
+    padding: 0.8rem 1.5rem;
+    border-bottom: 1px solid #e3e6f0;
+    color: white;
+    height: 30px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+
+}
+
+
+
+.fa-solid.fa-caret-down {
+    font-size: 20px;
+    color: white;
+    font-family: "Font Awesome 6 Free";
+    font-weight: bold;
+}
+
+.container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 42px;
+    margin-top: -7px;
+
+}
+
+.navbar-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 35px;
+
+}
+
+.fas.fa-bars {
+    padding-left: 83px;
+    cursor: pointer;
+}
+
+.icons {
+    padding-right: 12px;
+}
+
+.nav-item.dropdown {
+    display: flex;
+    align-items: center;
+}
+
+a.pSetting {
+    padding-right: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.pSetting img {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: white;
+    /* Color of your title */
+    text-decoration: none;
+}
+
+#sidebarToggle {
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 1.25rem;
+}
+
+#sidebarToggle:hover {
+    color: #4e73df;
+}
+
+.teacher-name {
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+}
+
+.nav-link {
+    color: white;
+    margin-right: 1rem;
+    display: flex;
+}
+
+.nav-link:hover {
+    color: #4e73df;
+}
+
+.navbar-nav .nav-item .dropdown-toggle {
+    cursor: pointer;
+}
+
+/* Ensure dropdown is positioned correctly and initially hidden */
+
+/* Ensure dropdown is positioned correctly and initially hidden */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    /* Show the dropdown just below the button */
+    right: 0;
+    background-color: #414c56;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    display: none;
+    margin-top: 13px;
+    border-radius: 0px 0px 10px 10px;
+    /* Initially hidden */
+}
+
+.dropdown-item {
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-item:hover {
+    color: rgb(255 146 0);
+}
+
+.dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.containerr {
+    display: flex;
+    height: 100%;
+    /* margin-top: 20px; */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #2c3e50;
+    /* position: fixed; */
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    margin-top: 55px;
+    transition: width 0.5s ease;
+    z-index: 1;
+}
+
+
+.sidebar.collapsed {
+    width: 0;
+    /* Hidden state */
+    overflow: hidden;
+}
+
+/* Main content */
+.main-content {
+    /* margin-left: 250px; */
+    width: 100%;
+    /* Initial content margin with visible sidebar */
+    transition: margin-left 0.5s ease;
+    overflow: hidden;
+    margin-top: 55px;
+}
+
+.main-content.expanded {
+    margin-left: 0;
+    overflow: hidden;
+    /* When sidebar is collapsed, remove the margin */
+}
+
+/* Dashboard Cards Layout */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+
+/* Chart section layout */
+.charts-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Two equal columns for charts */
+    gap: 20px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.chart-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}
+
+.teacher-data {
+    color: blanchedalmond;
+}
+
+.sidebar-header img.profile-picture {
+    width: 80px;
+    height: 77px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    /* margin-bottom: 2rem; */
+}
+
+.sidebar-header h3 {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.sidebar-header p {
+    margin-top: 5px;
+    font-size: 14px;
+    font-style: italic;
+    color: #bdc3c7;
+}
+
+hr {
+    width: 240px;
+    border: 1px solid rgb(255 146 0);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-menu li {
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    transition: background 0.3s ease;
+}
+
+.sidebar-menu li a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-menu li a i.fa-solid.fa-arrow-down {
+    padding-left: 100px;
+    font-size: 13px;
+}
+
+.sidebar-menu li a i.fa-solid.fa-solid.fa-arrow-up {
+    padding-left: 100px;
+    font-size: 13px;
+}
+
+/* Style for the hidden exam dropdown */
+.dropdown-box {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    /* background-color: #f9f9f9; */
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    max-height: 0;
+    /* Initially collapsed */
+}
+
+.dropdown-box li a {
+    padding: 0px 20px;
+    display: block;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-box.open li a:hover {
+    color: #f0f0f0;
+    /* background-color: #415563; */
+}
+
+/* Style for when the Exam dropdown is open */
+.dropdown-box.open {
+    max-height: 300px;
+    margin-top: 16px;
+    /* background-color: #415563; */
+    /* Max height when expanded (adjust as needed) */
+}
+
+.dropdown-box.open li a {
+    color: #a0a59b;
+}
+
+.dropdown-box.open li {
+    padding: 8px 14px;
+}
+
+.sidebar-menu li a i {
+    margin-right: 15px;
+    color: rgb(255 146 0);
+}
+
+.sidebar-menu li:hover {
+    background-color: #34495e;
+}
+
+/* Main Content */
+/* .main-content {
+    margin-left: 250px;
+    padding: 20px;
+} */
+
+.logout {
+    color: #e74c3c;
+    text-decoration: none;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.logout i {
+    margin-right: 5px;
+}
+
+/* Dashboard Cards */
+.dashboard-cards {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+}
+
+.card {
+    width: 23%;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+
+}
+
+.card i {
+    color: rgb(255 146 0);
+    font-size: 50px;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #34495e;
+}
+
+
+.card-body h3 {
+    font-size: 2.5rem;
+    color: #2980b9;
+    padding-left: 50px;
+}
+
+/* Charts Section */
+.charts-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.chart-container {
+    width: 48%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container h4 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #34495e;
+}
+
+
+/*  exam section start ***********************************88 */
+/* create exam section start ***********************************88 */
+
+.create-exam-content {
+    margin-left: 30px;
+}
+
+.create-exam-content h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.create-exam-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+#multipleChoiceOption,
+#subjectiveOption,
+#shortStoryOption {
+    display: flex;
+    background-color: #002e4c;
+    width: 60rem;
+    height: 7rem;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+    margin-top: 30px;
+
+}
+
+#multipleChoiceOption p {
+    /* padding-left: 12px; */
+    color: white;
+}
+
+#multipleChoiceOption h2 {
+    padding-left: 16px;
+    color: rgb(255 146 0);
+}
+
+#multipleChoiceOption .btn {
+    height: 91%;
+    /* margin-left: 61px; */
+    background-color: rgb(255 146 0);
+    border: none;
+    border-radius: 11px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    width: 12rem;
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+#subjectiveOption p {
+    /* padding-left: 12px; */
+    color: white;
+}
+
+#subjectiveOption h2 {
+    padding-left: 16px;
+    color: rgb(255 146 0);
+}
+
+#subjectiveOption .btn {
+    height: 91%;
+    /* margin-left: 61px; */
+    background-color: rgb(255 146 0);
+    border: none;
+    border-radius: 11px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    width: 12rem;
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+#shortStoryOption p {
+    /* padding-left: 12px; */
+    color: white;
+}
+
+#shortStoryOption h2 {
+    padding-left: 16px;
+    color: rgb(255 146 0);
+}
+
+#shortStoryOption .btn {
+    height: 91%;
+    /* margin-left: 61px; */
+    background-color: rgb(255 146 0);
+    border: none;
+    border-radius: 11px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    width: 12rem;
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+#multipleChoiceOption .btn:hover,
+#subjectiveOption .btn:hover,
+#shortStoryOption .btn:hover {
+    background-color: rgb(109 80 40);
+}
+
+#multipleChoiceOption #multipleExamLink,
+#subjectiveExamLink,#shortEasyLink {
+    height: 91%;
+    /* margin-left: 61px; */
+    background-color: rgb(255 146 0);
+    border: none;
+    border-radius: 11px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    width: 12rem;
+    cursor: pointer;
+    margin-right: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+#multipleChoiceOption #multipleExamLink:hover {
+    background-color: rgb(109 80 40);
+}
+
+/* create exam section end ***********************************88 */
+
+
+/* Question Bank section start ***********************************88 */
+.question-bank-details {
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.question-bank-details table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.question-bank-details th,
+.question-bank-details td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.question-bank-details th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.question-bank-details tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.question-bank-details button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.question-bank-details button:hover {
+    background-color: #0056b3;
+}
+
+/* Question Bank section end ***********************************88 */
+
+
+/*  exam section end ***********************************88 */
+
+
+/* courses section start ***********************************88 */
+/* Main container styling */
+#coursesContent {
+    width: 100%;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Enhanced Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+    font-size: 1.1em;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Header Styling */
+thead th {
+    background-color: #ffa94d;
+    /* Orange header */
+    color: white;
+    padding: 14px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+/* Body Cell Styling */
+tbody td {
+    background-color: #fff;
+    padding: 5px;
+    /* vertical-align: top; */
+    border: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+/* Student list */
+tbody td ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+tbody td ul li {
+    padding: 4px 0;
+    font-size: 0.95em;
+    color: #333;
+}
+
+/* If no students registered */
+tbody td p {
+    font-style: italic;
+    color: #aaa;
+}
+/* Alternate row background for better readability */
+tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9;
+}
+
+
+/* < !-- Create Exam Multiple Choice Content start --> */
+ #multipleExamContent {
+    margin-top: 65px;
+    margin-left: 35px;
+}
+
+ #subjectiveExamContent,#shortEssayContent {
+    margin-top: 65px;
+    margin-left: 35px;
+}
+
+.containerr #multipleExamContent input,
+select {
+    width: 13rem;
+    height: 26px;
+}
+
+.containerr #multipleExamContent select {
+    width: 13.5rem;
+    height: 30px;
+}
+
+form {
+    display: grid;
+}
+
+form .form-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+}
+
+form button.btn.btn-primary {
+    display: grid;
+    height: 3rem;
+    margin-top: 19px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Responsive table for smaller screens */
+@media screen and (max-width: 768px) {
+    table {
+        font-size: 1em;
+    }
+}
+
+/* courses section end ***********************************88 */
+
+
+
+/* Footer */
+.footer {
+    background-color: #fff;
+    color: black;
+    text-align: center;
+    padding: 15px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    /* margin-left: 250px; */
+}
+
+.footer-content p {
+    margin: 0;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 1200px) {
+    .dashboard-cards {
+        flex-wrap: wrap;
+    }
+
+    .card {
+        width: 48%;
+        margin-bottom: 20px;
+    }
+
+    .charts-section {
+        flex-wrap: wrap;
+    }
+
+    .chart-container {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+    }
+
+    .top-navbar .search-bar input {
+        width: 200px;
+    }
+
+    .user-profile img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    .footer {
+        width: calc(100% - 200px);
+        margin-left: 200px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .sidebar {
+        width: 150px;
+    }
+
+    .main-content {
+        margin-left: 150px;
+    }
+
+    .top-navbar .search-bar input {
+        width: 150px;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    .footer {
+        width: calc(100% - 150px);
+        margin-left: 150px;
+    }
+}

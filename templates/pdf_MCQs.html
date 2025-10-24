@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ exam.exam_title }} - Questions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .header,
+        .sub-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .header-left,
+        .header-right,
+        .sub-header-left,
+        .sub-header-right {
+            width: 48%;
+            /* Give space for both left and right side */
+        }
+
+        .header-left,
+        .sub-header-left {
+            text-align: left;
+            /* Align the text on the left side */
+        }
+
+        .header-right,
+        .sub-header-right {
+            text-align: right;
+            /* Align the text on the right side */
+        }
+
+        .header strong,
+        .sub-header strong {
+            font-weight: bold;
+        }
+
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        /* Use a table layout for the answer options */
+        .options {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .options td {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-left">
+            <strong>Exam:</strong> {{ exam.exam_title }}
+        </div>
+        <div class="header-right">
+            <strong>Subject:</strong> {{ exam.subject }}
+        </div>
+    </div>
+
+    <div class="sub-header">
+        <div class="sub-header-left">
+            <strong>Total Marks:</strong> {{ exam.total_marks }}
+        </div>
+        <div class="sub-header-right">
+            <strong>Time:</strong> {{ exam.exam_duration }} hours
+        </div>
+    </div>
+    <hr>
+
+    {% for question in questions %}
+    <div class="question">
+        <p><strong> {{ forloop.counter }}:</strong> {{ question.question_text }}</p>
+
+        <table class="options">
+            <tr>
+                <td><strong>a)</strong> {{ question.option_a }}</td>
+                <td><strong>b)</strong> {{ question.option_b }}</td>
+            </tr>
+            <tr>
+                <td><strong>c)</strong> {{ question.option_c }}</td>
+                <td><strong>d)</strong> {{ question.option_d }}</td>
+            </tr>
+        </table>
+
+    </div>
+    {% endfor %}
+</body>
+
+</html>

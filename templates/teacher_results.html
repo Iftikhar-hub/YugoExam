@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Exam Results</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/teacher_result.css' %}">
+    <script src="{% static 'js/teacher_reslut.js' %}" defer></script>
+    <link rel="icon" href="{% static 'image/logo.jpg' %}" type="image/x-icon">
+</head>
+
+<body>
+    <h2 class="heading">Exam Results</h2>
+    <div class="back-button-container">
+        <a href="{% url 'teacher_dashboard' %}">
+            <button class="back-button">Back to Dashboard</button>
+        </a>
+    </div>
+
+    <table class="exam-table">
+        <thead>
+            <tr>
+                <th>Exam Title</th>
+                <th>Subject</th>
+                <th>Students</th>
+                <th>Avg Score (%)</th>
+                <th>Passed</th>
+                <th>Failed</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exam in exams %}
+            <tr>
+                <td>{{ exam.exam_title }}</td>
+                <td>{{ exam.subject.name }}</td>
+                <td>{{ exam.total_students }}</td>
+                <td>{{ exam.avg_score|floatformat:2 }}</td>
+                <td>{{ exam.passed }}</td>
+                <td>{{ exam.failed }}</td>
+                <td>
+                    <button onclick="toggleResults('{{ exam.id }}', this)">View Results</button>
+                </td>
+            </tr>
+            <tr id="results-{{ exam.id }}" class="results-row" style="display: none;">
+                <td colspan="7">
+                    <table class="student-table">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Obtained Marks</th>
+                                <th>Total Marks</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for se in exam.student_exams %}
+                            <tr>
+                                <td>{{ se.student.get_full_name }}</td>
+                                <td>{{ se.obtained_marks }}</td>
+                                <td>{{ se.total_marks }}</td>
+                                <td>
+                                    <button onclick="toggleAnalysis('{{ se.id }}', this)">View Analysis</button>
+                                </td>
+                            </tr>
+                            <tr id="analysis-{{ se.id }}" class="analysis-row" style="display: none;">
+                                <td colspan="4">
+                                    <p><strong>Analysis for {{ se.student.get_full_name }}:</strong></p>
+                                    <ul>
+                                        {% for ans in se.analysis %}
+                                        <li>
+                                            <strong>Q:</strong> {{ ans.question }}<br>
+                                            <strong>Ans:</strong> {{ ans.answer }}<br>
+                                            <strong>Marks:</strong> {{ ans.marks }}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

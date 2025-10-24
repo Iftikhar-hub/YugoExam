@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/take_exam.css' %}">
+    <script src="{% static 'js/timer.js' %}" defer></script>
+    <script src="{% static 'js/activity_monitor.js' %}" defer></script>
+    <title>{{ exam.exam_title }}</title>
+</head>
+
+<body class="light-mode" data-exam-type="{{ exam.exam_type }}">
+    <h1 style="color: rgb(255 146 0);">{{ exam.exam_title }}</h1>
+
+    <!-- Updated Timer Display -->
+    <!-- MCQ Timer Display -->
+    <div id="mcq-timer-container" class="timer-container" style="display: none;">
+        <div class="circle">
+            <svg>
+                <circle cx="50" cy="50" r="45"></circle>
+                <circle id="minutes-circle" cx="50" cy="50" r="45"></circle>
+            </svg>
+            <div class="label">
+                <span id="minutes">00</span>
+                <small>Min</small>
+            </div>
+        </div>
+        <div class="circle">
+            <svg>
+                <circle cx="50" cy="50" r="45"></circle>
+                <circle id="seconds-circle" cx="50" cy="50" r="45"></circle>
+            </svg>
+            <div class="label">
+                <span id="seconds">00</span>
+                <small>Sec</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subjective Timer Display -->
+    <!-- Subjective Timer Display with Circular Progress -->
+    <div id="subjective-timer-container" class="timer-container" style="display: none;">
+        <div class="circle">
+            <svg>
+                <circle cx="50" cy="50" r="45"></circle>
+                <circle id="subjective-minutes-circle" cx="50" cy="50" r="45"></circle>
+            </svg>
+            <div class="label">
+                <span id="subjective-minutes">00</span>
+                <small>Min</small>
+            </div>
+        </div>
+        <div class="circle">
+            <svg>
+                <circle cx="50" cy="50" r="45"></circle>
+                <circle id="subjective-seconds-circle" cx="50" cy="50" r="45"></circle>
+            </svg>
+            <div class="label">
+                <span id="subjective-seconds">00</span>
+                <small>Sec</small>
+            </div>
+        </div>
+    </div>
+
+
+
+    <form id="exam-form" method="POST" action="{% url 'submit_exam' exam.id %}">
+        {% csrf_token %}
+
+        {% for question in questions %}
+        <div class="question-box"
+            data-type="{% if exam.exam_type == 'ST' or exam.exam_type == 'SE' %}Subjective{% else %}MCQ{% endif %}"
+            data-marks="{% if exam.exam_type == 'MC' %}{{ question.marks }}{% else %}{{ question.STmarks }}{% endif %}">
+
+            <p class="question-text">
+                <strong>Q: {{ forloop.counter }}:</strong> {{ question.question_text }}
+                ({% if exam.exam_type == 'MC' %}{{ question.marks }}{% else %}{{ question.STmarks }}{% endif %} Marks)
+            </p>
+
+            {% if exam.exam_type == "MC" %}
+            <label><input type="radio" name="answer_{{ question.id }}" value="1"> {{ question.option_a }}</label><br>
+            <label><input type="radio" name="answer_{{ question.id }}" value="2"> {{ question.option_b }}</label><br>
+            <label><input type="radio" name="answer_{{ question.id }}" value="3"> {{ question.option_c }}</label><br>
+            <label><input type="radio" name="answer_{{ question.id }}" value="4"> {{ question.option_d }}</label><br>
+
+            {% elif exam.exam_type == "ST" or exam.exam_type == "SE" %}
+            <textarea name="answer_{{ question.id }}" placeholder="Enter your answer here..."
+                style="width: 60%; height: 20vh;"></textarea>
+
+            {% else %}
+            <input type="text" name="answer_{{ question.id }}" placeholder="Enter your answer here...">
+            {% endif %}
+        </div>
+        <hr>
+        {% endfor %}
+
+        <button class="submit-btn" type="submit">Submit Exam</button>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - OnlineExam</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/teacher_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/publish_exam.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="{% static 'image/logo.jpg' %}" type="image/x-icon">
+</head>
+
+<body>
+    <div class="navv">
+
+
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="leftNavbar">
+                    <!-- Left: Dashboard Title -->
+                    <a class="navbar-brand" href="#">OnlineExam</a>
+
+                    <!-- Expand/Collapse Icon for Sidebar -->
+                    <!-- <button class="btn btn-primary" id="sidebarToggle"> -->
+                    <i id="toggleSidebar" class="fas fa-bars"></i>
+                    </button>
+                </div>
+
+                <!-- Right: Notification, Profile Picture, Teacher Name, Dropdown -->
+                <!-- <div class="rightNavbar"> -->
+
+                <ul class="navbar-nav">
+                    <div class="icons">
+                        <!-- Notification Icon -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="notificationDropdown" role="button" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="badge bg-danger">3</span>
+                            </a>
+                        </li>
+                    </div>
+
+                    <!-- Profile Picture, Teacher Name, and Dropdown -->
+                    <div class="profile">
+                        <li class="nav-item dropdown">
+                            <a class="pSetting" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{% if user.teacher.profile_picture %}{{ user.teacher.profile_picture.url }}{% else %}{% static 'img/default_profile_pic.png' %}{% endif %}"
+                                    alt="Teacher Profile">
+                                <span class="teacher-name ms-2">{{ user.teacher.first_name }}</span>
+                            </a>
+                        </li>
+                    </div>
+                    <div class="dropdown">
+                        <!-- Button to trigger the dropdown -->
+                        <button class="dropdown-toggle" id="profileDropdown" aria-expanded="false">
+                            <i class="fa-solid fa-caret-down"></i> </button>
+
+                        <ul class="dropdown-menu" id="dropdownMenu">
+                            <li><a class="dropdown-item" href="#">Profile Settings</a></li>
+                            <li><a class="dropdown-item" style="color: #e74c3c;"
+                                    href="{% url 'teacher_login' %}">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </ul>
+
+                <!-- </div> -->
+            </div>
+        </nav>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="containerr">
+
+
+        <div class="sidebar">
+            <div class="sidebar-header">
+                {% if user.teacher.profile_picture %}
+                <img src="{{ user.teacher.profile_picture.url }}" alt="{{ user.teacher.first_name }}'s picture" class="profile-picture">
+                {% else %}
+                <img src="{% static 'default-profile.png' %}" alt="Default profile picture" class="profile-picture">
+                {% endif %}
+                <div class="teacher-data">
+                    <h3>{{ user.teacher.first_name }} {{ user.teacher.last_name }}</h3>
+                    
+                    <p> <i class="fa-regular fa-circle-user" style="color: rgb(255 146 0);"></i> Teacher</p>
+                </div>
+            </div>
+            <h7 style="color: rgb(255 146 0);">{{ user.teacher.department }}<h7>
+            <hr>
+            <ul class="sidebar-menu">
+                <li><a href="#" id="dashboardLink"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" id="examsToggle"><i class="fas fa-file-alt"></i> Exams
+                        <i id="examsArrow" class="fa-solid fa-arrow-down"></i></a>
+                    <ul class="dropdown-box" id="examsDropdown" style="display: none;">
+                        <li><a href="#" id="createExamLink">Create Exam</a></li>
+                        <li><a href="#" id="questionBankToggle">Exam Bank</a></li>
+                        <li><a href="#">Schedule Exam</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" id="coursesLink"><i class="fas fa-book"></i> Courses</a></li>
+                <li><a href="#"><i class="fas fa-user-graduate"></i> Students</a></li>
+                <li><a href="{% url 'teacher_results' %}"><i class="fas fa-poll"></i> Results</a></li>
+                <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="dashboardContent">
+            <!-- Dashboard Cards -->
+            <div class="dashboard-cards">
+                <div class="card">
+
+                    <div class="card-header">Total Students
+                        <div>
+                            <i class='fas fa-user-graduate'></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3>{{ total_students }}</h3>
+                        <!-- <ul>
+                            {% if students %}
+                            {% for student in students %}
+                            <li>{{ student.first_name }} {{ student.last_name }} - {{ student.department.name }}</li>
+                            {% endfor %}
+                            {% else %}
+                            <p>No students assigned yet.</p>
+                            {% endif %}
+                        </ul> -->
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Total Courses
+                        <div>
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3>{{ total_courses }}</h3>
+                        <ul>
+                            {% for subject in selected_subjects %}
+                            <li>{{ subject.name }}</li> <!--  Subject model has a 'name' field -->
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Upcoming Exams
+                        <div>
+                            <i class='fas fa-laptop-code'></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3>0</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Completed Exams
+                        <div>
+                            <i class="fa-regular fa-square-check"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3>0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-section">
+                <div class="chart-container">
+                    <h4>Student Progress</h4>
+                    <!-- You can add a chart here using Chart.js -->
+                    <canvas id="studentProgressChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h4>Exam Performance</h4>
+                    <!-- Another chart can go here -->
+                    <canvas id="examPerformanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- ***********Exam Section ************************** -->
+        <!-- ***********Create Exam Section ************************** -->
+        <div class="main-content create-exam-content" id="createExamContent" style="display: none;">
+            <h2> Create Exam</h2>
+            <p>Select the type of exam you'd like to create:</p>
+
+            <!-- Exam Type Options -->
+            <div class="exam-types">
+                <div class="exam-option" id="multipleChoiceOption">
+                    <h2>Multiple Choice :</h2>
+                    <p>Create a multiple-choice exam where students select one or more answers.</p>
+                    <a href="#" id="multipleExamLink">Create Exam</a>
+                    <!-- <button id="multipleExamLink " class="btn">Create Exam</button> -->
+                </div>
+
+                <div class="exam-option" id="subjectiveOption">
+                    <h2>Subjective Type :</h2>
+                    <p>Create a subjective type exam where students provide written answers.</p>
+                    <!-- <button class="btn">Create Exam</button> -->
+                    <a href="#" id="subjectiveExamLink" class="btn">Create Exam</a>
+                </div>
+
+                <div class="exam-option" id="shortStoryOption">
+                    <h2>Short Essay :</h2>
+                    <p>Create an essay-type exam where students write a short story or essay.</p>
+                    <!-- <button class="btn">Create Exam</button> -->
+                    <a href="#" id="shortEasyLink" class="btn">Create Exam</a>
+                </div>
+            </div>
+        </div>
+        <!-- ***********Create Exam Section end ************************** -->
+
+        <!-- ***********Question Bank Section  start************************** -->
+        <div class="main-content" id="questionBankContent" style="display: none;">
+            <!-- Question Bank Table to Display Details -->
+            <div class="question-bank-details">
+                <div class="question-bank">
+                    <h1 style="color: rgb(255 146 0);">Exam Bank</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Exam Title</th>
+                                <th>Exam Type</th>
+                                <th>Schedule</th>
+                                <th>Subject</th>
+                                <th>Publish</th>
+                                <!-- <th>Department</th> -->
+                                <!-- <th>Teacher</th> -->
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if exams %}
+                            {% for exam in exams %}
+                            <tr>
+                                <td>{{ exam.exam_title }}</td>
+                                <td>{{ exam.exam_type }}</td>
+                                <td>{{ exam.schedule }}</td>
+                                <td>{{ exam.subject.name }}</td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox" class="publish-toggle" data-exam-id="{{ exam.id }}" {% if exam.published %} checked {% endif %}>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <a style="color: green; text-decoration: none; font-weight: bolder;"
+                                        href="{% url 'edit_exam' exam.id %}">Edit</a> |
+                                        <a style="color: blue; text-decoration: none;" href="{% url 'view_exam_questions' exam.id %}">View</a> |
+                                    <a style="color: purple; text-decoration: none;" href="{% url 'generate_pdf' exam.id %}">Download PDF</a> |
+                                        
+                                    <a style="color: #e74c3c; text-decoration: none;"
+                                        href="{% url 'delete_exam' exam.id %}"
+                                        onclick="return confirm('Are you sure you want to delete this exam?')">Delete</a> 
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="7">No exams found.</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <!-- ***********Question Bank Section  end************************** -->
+        <!-- ***********Exam Section ************************** -->
+
+
+        <!-- Courses Content start -->
+        <div id="coursesContent" class="main-content" style="display: none;">
+            <h2 style="color: rgb(255 146 0);">Courses and Registered Students</h2>
+        
+            <p>Total Courses Registered: {{ total_courses }}</p>
+            <p>Total Students Registered: {{ total_students }}</p>
+
+        <form method="GET" id="semesterFilterForm">
+            <label for="semester">Select Semester:</label>
+            <select name="semester" id="semester" onchange="document.getElementById('semesterFilterForm').submit();">
+                <option value="">All</option>
+            {% for sem in semesters %}
+            <option value="{{ sem.0 }}" {% if selected_semester == sem.0 %}selected{% endif %}> {{ sem.1 }}</option>
+            {% endfor %}
+
+            </select>
+        </form>
+
+        
+            {% if courses_with_students %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Registered Students</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in courses_with_students %}
+                    <tr>
+                        <td>{{ item.course.name }}</td>
+                        <td>
+                            {% if item.students %}
+                            <ul>
+                                {% for student in item.students %}
+                                <li>{{ student.first_name }} {{ student.last_name }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                            <p>No students registered.</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No courses or students assigned yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- Courses Content end -->
+
+        <!-- Create Exam Multiple Choice Content start -->
+        <div id="multipleExamContent" style="display: none;">
+            <h2>Create Multiple Choice Exam</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="title">Exam Title</label>
+                    {{ multiple_choice_form.exam_title }}
+                </div>
+                <div class="form-group">
+                    <label for="exam_type">Exam Type</label>
+                    {{ multiple_choice_form.exam_type }}
+                </div>
+                <div class="form-group">
+                    <label for="schedule">Schedule</label>
+                    {{ multiple_choice_form.schedule }}
+                </div>
+                <div class="form-group">
+                    <label for="total_marks">Total Marks</label>
+                    {{ multiple_choice_form.total_marks }}
+                </div>
+                <div class="form-group">
+                    <label for="passing_marks">Passing Marks</label>
+                    {{ multiple_choice_form.passing_marks }}
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    {{ multiple_choice_form.subject }}
+                </div>
+                <button type="submit" class="btn btn-primary" name="multiple_choice_submit">Create Exam</button>
+            </form>
+        </div>
+        <!-- Create Exam Multiple Choice Content end -->
+
+        <!-- Create Exam subjective Content start -->
+        <div id="subjectiveExamContent" style="display: none;">
+            <h2>Create Subjective Exam</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="title">Exam Title</label>
+                    {{ subjective_form.exam_title }}
+                </div>
+                <div class="form-group">
+                    <label for="exam_type">Exam Type</label>
+                    {{ subjective_form.exam_type }}
+                </div>
+                <div class="form-group">
+                    <label for="schedule">Schedule</label>
+                    {{ subjective_form.schedule }}
+                </div>
+                <div class="form-group">
+                    <label for="total_marks">Total Marks</label>
+                    {{ subjective_form.total_marks }}
+                </div>
+                <div class="form-group">
+                    <label for="passing_marks">Passing Marks</label>
+                    {{ subjective_form.passing_marks }}
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    {{ subjective_form.subject }}
+                </div>
+                <button type="submit" class="btn btn-primary" name="subjective_submit">Create Exam</button>
+            </form>
+        </div>
+        <!-- Create Exam subjective  Content end -->
+
+        <!-- Create Exam Short Essay Content start -->
+        <div id="shortEssayContent" style="display: none;">
+            <h2>Create Short Essay Exam</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="title">Exam Title</label>
+                    {{ short_essay_form.exam_title }}
+                </div>
+                <div class="form-group">
+                    <label for="exam_type">Exam Type</label>
+                    {{ short_essay_form.exam_type }}
+                </div>
+                <div class="form-group">
+                    <label for="schedule">Schedule</label>
+                    {{ short_essay_form.schedule }}
+                </div>
+                <div class="form-group">
+                    <label for="total_marks">Total Marks</label>
+                    {{ short_essay_form.total_marks }}
+                </div>
+                <div class="form-group">
+                    <label for="passing_marks">Passing Marks</label>
+                    {{ short_essay_form.passing_marks }}
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    {{ short_essay_form.subject }}
+                </div>
+                <button type="submit" class="btn btn-primary" name="short_essay_submit">Create Exam</button>
+            </form>
+        </div>
+        <!-- Create Exam Short Essay Content end -->
+
+
+    </div>
+
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2024 OnlineExam. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/teacher_dashboard.js' %}"></script>
+</body>
+
+</html>

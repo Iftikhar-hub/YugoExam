@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Teacher Registration - OnlineExam{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/teacher_register.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="heading">
+    <h2>Welcome To The OnlineExam</h2>
+    <p>World class Online Examination Platform</p>
+</div>
+<div class="container">
+    <div class="t_reg">
+        <h2>Teacher Registration</h2>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        <!-- {% csrf_token %}
+        {{ form.as_p }} -->
+
+        {% csrf_token %}
+        <div class="form-container">
+            <!-- Column 1 -->
+            <div class="form-column">
+                <div class="form-group">
+                    {{ form.first_name.label_tag }}
+                    {{ form.first_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.last_name.label_tag }}
+                    {{ form.last_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    {{ form.phone.label_tag }}
+                    {{ form.phone }}
+                </div>
+            </div>
+
+            <!-- Column 2 -->
+            <div class="form-column">
+                <div class="form-group">
+                    {{ form.qualification.label_tag }}
+                    {{ form.qualification }}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label_tag }}
+                    {{ form.password }}
+                </div>
+                <div class="form-group">
+                    {{ form.confirm_password.label_tag }}
+                    {{ form.confirm_password }}
+                    {% if form.confirm_password.errors %}
+                    <div class="error-message">{{ form.confirm_password.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.profile_picture.label_tag }}
+                    {{ form.profile_picture }}
+                </div>
+
+            </div>
+        </div>
+        <!-- Gender and Department selection -->
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="gender" class="form-label">Gender</label>
+                <select class="form-control" id="gender" name="gender">
+                    <option value="">Select Gender</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="O">Other</option>
+                </select>
+            </div>
+
+            
+        </div>
+
+        <div class="mb-3">
+            <label for="department" class="form-label">Department</label>
+            {{ form.department }}
+        </div>
+        
+        <div class="mb-3">
+            <label for="id_subjects" class="form-label">Select Subjects</label>
+            <select class="form-control" id="id_subjects" name="subjects" multiple></select>
+        </div>
+
+       
+
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // JavaScript for dynamically loading subjects based on selected department
+    $(document).ready(function () {
+            $('#id_department').change(function () {
+                var deptId = $(this).val();
+                if (deptId) {
+                    $.ajax({
+                        url: "{% url 'get_subjects' %}",
+                        data: {
+                            'department_id': deptId
+                        },
+                        success: function (data) {
+                            let $subjects = $('#id_subjects');
+                            $subjects.empty();
+                            $.each(data, function (index, subject) {
+                                $subjects.append($('<option>', {
+                                    value: subject.id,
+                                    text: subject.name
+                                }));
+                            });
+                        }
+                    });
+                }
+            });
+        });
+</script>
+{% endblock %}

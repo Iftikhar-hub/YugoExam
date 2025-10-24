@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Signup - YugoExam{% endblock %}
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+   <div class="heading1">
+    <p>Create Your Account</p>
+   </div>
+
+   <div class="boxes">
+    <dvi class="boxes1">
+        <div class="boxes1-1">
+            <p>Teacher Registration</p>
+        </div>
+        <a href="{% url 'teacher_register' %}">Teacher Click Here</a>
+
+    </dvi>
+    <dvi class="boxes2">
+        <div class="boxes2-1">
+            <p>Student Registration</p>
+        </div>
+        <a href="{% url 'student_register' %}">Student Click Here</a>
+    
+    </dvi>
+   </div>
+</div>
+{% endblock %}

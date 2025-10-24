@@ -1,0 +1,327 @@
+body {
+    background-color: white;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.nb {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgb(37 44 52);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav .navbar {
+    background-color: white;
+}
+
+.leftnav {
+    margin-right: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: white;
+}
+
+#btn-signup {
+    margin-right: 14px;
+    background-color: rgb(255 146 0);
+    color: white;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 19px;
+}
+
+/* .navbar-brand {
+    color: rgb(255 146 0);
+} */
+#about,
+#home,
+#contact {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: white;
+}
+#about:hover,
+#home:hover,
+#contact:hover {
+    font-size: 18px;
+    color:rgb(255 146 0) ;
+}
+
+/* .nav-link:hover {
+    font-size: 18px;
+    color:rgb(255 146 0) ;
+}
+.nav-link,
+#home:hover {
+    font-size: 18px;
+    color:rgb(255 146 0) ;
+} */
+
+.navbar #navbarSupportedContent {
+    padding-top: 10px;
+    padding-left: 40px;
+}
+
+#yugo {
+    font-family: 'Poppins', sans-serif;
+    color: rgb(255 146 0);
+    font-weight: bold;
+}
+
+#exam {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    font-weight: bold;
+}
+
+.dropdown-item {
+    color: black;
+}
+
+.dropdown-item:hover {
+    color: rgb(255 146 0);
+}
+
+#banner-imagee {
+    width: 100%;
+    height: 850px;
+    top: 70px;
+    position: fixed;
+}
+
+.image-spacer {
+    height: 850px;
+    width: 100%;
+}
+
+.box-container {
+
+    padding: 20px;
+    position: relative;
+    background-color: white;
+    padding-top: 60px;
+
+}
+
+.boxContainer {
+    display: flex;
+}
+
+.text-content {
+    flex: 1;
+    padding-right: 20px;
+    margin-left: 120px;
+}
+
+.image-content {
+    flex: 1;
+    text-align: right;
+    margin-top: 60px;
+}
+
+.text-content h1 {
+    color: rgb(255 146 0);
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+.text-content h4 {
+    color: #494949;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+.text-content p {
+    color: #494949;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.image-content img {
+    width: 75%;
+    height: 90%;
+    border-radius: 10px;
+    margin-right: 120px;
+    transform: translateX(-100%);
+    /* Start off-screen to the right */
+    opacity: 0;
+    /* Make it invisible initially */
+    transition: all 0.9s ease-in-out;
+    /* Smooth animation */
+}
+
+.image-content img.visible {
+    transform: translateX(0);
+    /* Move to its original position */
+    opacity: 1;
+    /* Make it visible */
+}
+
+
+.icon1 {
+    display: flex;
+}
+
+.icon1 .fa-solid {
+    font-size: 13px;
+    color: rgb(255 146 0);
+    margin-top: 28px;
+}
+
+.icon1 p {
+    margin-left: 15px;
+}
+
+.box1 .whyChooce {
+    width: 20%;
+    height: 340px;
+    background-color: rgb(255 146 0);
+    margin-top: 100px;
+    margin-left: 120px;
+    border-radius: 10px
+}
+
+.box1 {
+    display: flex;
+    /* margin-top: 80px; */
+    height: 600px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.9s ease-in-out;
+}
+
+.box1 .whyChooce h2 {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    padding-top: 30px;
+    padding-left: 30px;
+}
+
+.box1 .whyChooce p {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    padding-left: 30px;
+}
+
+.lifeTimeAccess,
+.customerSupport,
+.reporting {
+    text-align: center;
+    width: 15%;
+    height: 340px;
+    margin-top: 100px;
+    margin-left: 100px;
+    border-radius: 10px;
+    border: 1px solid rgb(255 146 0);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+
+
+}
+
+.lifeTimeAccess:hover,
+.customerSupport:hover,
+.reporting:hover {
+    background-color: #e0ffe0;
+    box-shadow: 0 4px 8px rgba(0, 128, 0, 0.2);
+    transform: scale(1.05);
+    border-color: darkrgb(255 146 0);
+}
+
+.box1.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.lifeTimeAccess i,
+.customerSupport i,
+.reporting i {
+    font-size: 50px;
+    padding-top: 24px;
+    color: rgb(255 146 0);
+}
+
+.p1-1 {
+    padding-top: 16px;
+    color: rgb(255 146 0);
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+.p1-2 {
+    color: #494949;
+    padding: 0px 20px 20px 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+/* Footer */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 40px 0;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    /* top: 100px;
+    margin: 0; */
+}
+
+.footer h5 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.footer ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.footer ul li {
+    margin-bottom: 10px;
+}
+
+.footer ul li a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+.footer ul li a:hover {
+    color: rgb(255 146 0);
+}
+
+.footer .social-media li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.footer .social-media li a {
+    color: rgb(255 146 0);
+    font-size: 18px;
+}
+
+.footer .social-media li a:hover {
+    color: white;
+    /* Twitter Blue */
+}
+
+.footer .text-center {
+    margin-top: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+}
+
+
+/* *********************************************************************************** */
+

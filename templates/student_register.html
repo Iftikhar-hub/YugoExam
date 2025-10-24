@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Student Registration{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/student_register.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="heading"></div>
+<h2>Welcome To The YugoExam</h2>
+<p>World class Online Examination Platform</p>
+</div>
+<div class="container">
+    <div class="t_reg">
+        <h2>Student Registration</h2>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">{{ form.first_name.label_tag }} {{ form.first_name }}</div>
+                <div class="form-group">{{ form.email.label_tag }} {{ form.email }}</div>
+                <div class="form-group">{{ form.password.label_tag }} {{ form.password }}</div>
+                <div class="form-group">{{ form.gender.label_tag }} {{ form.gender }}</div>
+                <div class="form-group">{{ form.department.label_tag }} {{ form.department }}</div>
+                <div class="form-group">{{ form.semester.label_tag }} {{ form.semester }}</div>
+            </div>
+    
+            <div class="col-md-6">
+                <div class="form-group">{{ form.last_name.label_tag }} {{ form.last_name }}</div>
+                <div class="form-group">{{ form.phone.label_tag }} {{ form.phone }}</div>
+                <div class="form-group">{{ form.confirm_password.label_tag }} {{ form.confirm_password }}</div>
+                <div class="form-group">{{ form.profile_picture.label_tag }} {{ form.profile_picture }}</div>
+                <div class="form-group">
+                    {{ form.subjects.label_tag }}
+                    {{ form.subjects }}
+                </div>
+            </div>
+        </div>
+    
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+   function updateSubjects() {
+        var departmentId = $('#id_department').val();  // fixed
+        var semester = $('#id_semester').val();        // fixed
+        if (departmentId && semester) {
+            $.ajax({
+                url: "{% url 'update_subjects' %}",
+                data: {
+                    department_id: departmentId,
+                    semester: semester
+                },
+                success: function (data) {
+                    var $subjects = $('#id_subjects');  // still correct
+                    $subjects.empty();
+                    data.subjects.forEach(function (subject) {
+                        $subjects.append('<option value="' + subject.id + '">' + subject.name + '</option>');
+                    });
+                }
+            });
+        } else {
+            $('#id_subjects').empty();
+        }
+    }
+
+    $('#id_department, #id_semester').on('change', updateSubjects);
+
+</script>
+{% endblock %}

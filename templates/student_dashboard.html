@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - OnlineExam</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/teacher_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/student_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/publish_exam.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="{% static 'image/logo.jpg' %}" type="image/x-icon">
+</head>
+
+<body>
+    <div class="navv">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="leftNavbar">
+                    <!-- Left: Dashboard Title -->
+                    <a class="navbar-brand" href="#">OnlineExam</a>
+
+                    <!-- Expand/Collapse Icon for Sidebar -->
+                    <!-- <button class="btn btn-primary" id="sidebarToggle"> -->
+                    <i id="toggleSidebar" class="fas fa-bars"></i>
+                    </button>
+                </div>
+
+                <!-- Right: Notification, Profile Picture, Teacher Name, Dropdown -->
+                <!-- <div class="rightNavbar"> -->
+
+                <ul class="navbar-nav">
+                    <div class="icons">
+                        <!-- Notification Icon -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="notificationDropdown" role="button" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="badge bg-danger">3</span>
+                            </a>
+                        </li>
+                    </div>
+
+                    <!-- Profile Picture, Teacher Name, and Dropdown -->
+                    <div class="profile">
+                        <li class="nav-item dropdown">
+                            <a class="pSetting" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{% if user.student.profile_picture %}{{ user.student.profile_picture.url }}{% else %}{% static 'img/default_profile_pic.png' %}{% endif %}"
+                                    alt="Teacher Profile">
+                                <span class="teacher-name ms-2">{{ user.student.first_name }}</span>
+                            </a>
+                        </li>
+                    </div>
+                    <div class="dropdown">
+                        <!-- Button to trigger the dropdown -->
+                        <button class="dropdown-toggle" id="profileDropdown" aria-expanded="false">
+                            <i class="fa-solid fa-caret-down"></i> </button>
+
+                        <ul class="dropdown-menu" id="dropdownMenu">
+                            <li><a class="dropdown-item" href="#">Profile Settings</a></li>
+                            <li><a class="dropdown-item" style="color: #e74c3c;"
+                                    href="{% url 'student_login' %}">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </ul>
+
+                <!-- </div> -->
+            </div>
+        </nav>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="containerr">
+
+        <!-- ***************************Sde Bar Start************************************* -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                {% if user.student.profile_picture %}
+                <img src="{{ user.student.profile_picture.url }}" alt="{{ user.student.first_name }}'s picture" class="profile-picture">
+                {% else %}
+                <img src="{% static 'default-profile.png' %}" alt="Default profile picture" class="profile-picture">
+                {% endif %}
+                <div class="teacher-data">
+                    <h3>{{ user.student.first_name }} {{ user.student.last_name }}</h3>
+                    <p> <i class="fa-regular fa-circle-user" style="color: rgb(255 146 0);"></i> Student : {{ user.student.department.name }}</p>
+                   
+                </div>
+            </div>
+            <hr>
+            <ul class="sidebar-menu">
+                <li><a href="#" id="dashboardLink"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" id="examsToggle"><i class="fas fa-file-alt"></i> Exams
+                        <i id="examsArrow" class="fa-solid fa-arrow-down"></i></a>
+                    <ul class="dropdown-box" id="examsDropdown" style="display: none;">
+                        <li><a href="#" id="takeExamLink">Available Exam</a></li>
+                        
+                    </ul>
+                </li>
+                <li><a href="#" id="coursesLink"><i class="fas fa-book"></i> Courses</a></li>
+                <li><a href="#"><i class="fas fa-user-graduate"></i> Students</a></li>
+                <li><a href="{% url 'all_results' %}"><i class="fas fa-poll"></i> Results</a></li>
+                <li><a href="{% url 'student_profile' %}"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+        </div>
+
+        <!-- ***************************Sde Bar End************************************* -->
+
+        <div class="cc"  id="dashboardContent">
+         <div class="topCards">
+              <!-- ***************************Recent result start************************************* -->
+             <div class="recent-results">
+                  <h2>Recent Exam Results</h2>
+                  <ul>
+                      <li>
+                         <span>Exam Title: Math Test</span>
+                         <span>Score: 85%</span>
+                         <div class="btnUpcoming"><a href="#">View Details</a></div>
+                     </li>
+               
+                 </ul>
+               </div>
+              <!-- ***************************Recent result end************************************* -->
+
+
+              <!-- ***************************Upcoming Exam start************************************* -->
+             <div class="upcoming-exams">
+                 <h2>Upcoming Exams</h2>
+                 <ul>
+                     {% for exam in upcoming_exams %}
+                     <li>
+                         <span>Exam Title: {{ exam.exam_title }} | Date: {{ exam.schedule }}</span>
+                         <div class="btnUpcoming"> <a href="#">View Details</a></div>
+                     </li>
+                     {% empty %}
+                     <li>No upcoming exams at the moment.</li>
+                     {% endfor %}
+                 </ul>
+              </div>
+              <!-- ***************************Upcoming Exam end************************************* -->
+           </div>
+         <div class="course-table-container">
+               <table class="course-table">
+                   <thead>
+                       <tr>
+                           <th>Course</th>
+                           <th>Department</th>
+                           <th>Semester</th>
+                           <th>Action</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       {% for subject in subjects %}
+                       <tr>
+                           <td>{{ subject.name }}</td>
+                           <td>{{ subject.department.name }}</td>
+                           <td>{{ subject.semester }}</td>
+                           <td>
+                               <a href="{% url 'unroll_course' subject.id %}" class="unroll-btn">Unroll</a>
+                           </td>
+                       </tr>
+                       {% empty %}
+                       <tr>
+                           <td colspan="3">No courses enrolled.</td>
+                       </tr>
+                       {% endfor %}
+                   </tbody>
+               </table>
+           </div>  
+         
+         <div class="calendar-container">
+             <h1 style="color: rgb(255 146 0); margin-left: 20px;" >Calendar</h1>
+             <div class="calendar">
+                 <div class="calendar-header">
+                     <button style="margin-left: 4px;" id="prev-month">&lt;</button>
+                     <h2 style="color: rgb(255 146 0);" id="month-year"></h2>
+                     <button style="margin-right: 4px;" id="next-month">&gt;</button>
+                 </div>
+                 <div class="calendar-days">
+                     <div class="day-name">Sun</div>
+                     <div class="day-name">Mon</div>
+                     <div class="day-name">Tue</div>
+                     <div class="day-name">Wed</div>
+                     <div class="day-name">Thu</div>
+                     <div class="day-name">Fri</div>
+                     <div class="day-name">Sat</div>
+                 </div>
+                 <div class="calendar-body" id="calendar-body"></div>
+             </div>
+         </div>
+
+        </div>
+
+        <div id="takeExamContent" style="display: none;">
+            <h2 style="color: rgb(255 146 0); font-weight: bold;">Available Exams</h2>
+            <table>
+    <thead>
+        <tr>
+            <th>Exam Title</th>
+            <th>Subject</th>
+            <th>Exam Type</th>
+            <th>Schedule</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for exam in exams %}
+        <tr>
+            <td>{{ exam.exam_title }}</td>
+            <td>{{ exam.subject.name }}</td>
+            <td>{{ exam.get_exam_type_display }}</td>
+            <td>{{ exam.schedule|date:"m-d H:i" }}</td>
+
+            {% if exam.schedule < now %}
+                <td style="color: red;">Expired</td>
+                <td>
+                    <button disabled class="disabled-btn">Take</button>
+                </td>
+            {% else %}
+                {% if exam.is_taken %}
+                    <td style="color: blue;">Taken</td>
+                    <td>
+                        <a href="{% url 'exam_results' exam.id %}" class="btn btn-primary">View Results</a>
+                    </td>
+                {% else %}
+                    <td style="color: green;">Active</td>
+                    <td>
+                        <a href="{% url 'take_exam' exam.id %}" class="btn btn-primary">Take Exam</a>
+                    </td>
+                {% endif %}
+            {% endif %}
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No exams available.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+        </div>
+
+        <div class="main-content" id="questionBankContent" style="display: none;">
+            <!-- Question Bank Table to Display Details -->
+            <div class="question-bank-details">
+                <div class="question-bank">
+                    <h1 style="color: rgb(255 146 0);">Exam Bank</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Exam Title</th>
+                                <th>Exam Type</th>
+                                <th>Schedule</th>
+                                <th>Subject</th>
+                                <th>Publish</th>
+                                <!-- <th>Department</th> -->
+                                <!-- <th>Teacher</th> -->
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if exams %}
+                            {% for exam in exams %}
+                            <tr>
+                                <td>{{ exam.exam_title }}</td>
+                                <td>{{ exam.exam_type }}</td>
+                                <td>{{ exam.schedule }}</td>
+                                <td>{{ exam.subject.name }}</td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox" class="publish-toggle" data-exam-id="{{ exam.id }}" {% if exam.published %} checked 
+                                        {% endif %}>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <a style="color: green; text-decoration: none; font-weight: bolder;"
+                                        href="{% url 'edit_exam' exam.id %}">Edit</a> |
+                                    <a style="color: blue; text-decoration: none;"
+                                        href="{% url 'view_exam_questions' exam.id %}">View</a> |
+                                    <a style="color: purple; text-decoration: none;"
+                                        href="{% url 'generate_pdf' exam.id %}">Download PDF</a> |
+
+                                    <a style="color: #e74c3c; text-decoration: none;"
+                                        href="{% url 'delete_exam' exam.id %}"
+                                        onclick="return confirm('Are you sure you want to delete this exam?')">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="7">No exams found.</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="coursesContent" class="main-content" style="display: none;">
+            <h2 style="color: rgb(255 146 0);">Semester Enrolled</h2>
+            <p>Semester Enrolled in: {{ semester }}</p>
+            
+            <h2 style="color: rgb(255 146 0);">Courses Enrolled</h2>
+        
+            <p>Total Courses Enrolled: {{ total_courses }}</p>
+        
+            <div class="course-table-container"> 
+                <table class="course-table">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Department</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for subject in subjects %}
+                        <tr>
+                            <td>{{ subject.name }}</td>
+                            <td>{{ subject.department.name }}</td>
+                            <td>
+                                <a href="{% url 'unroll_course' subject.id %}" class="unroll-btn">Unroll</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3">No courses enrolled.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="enroll-course">
+                <h3 style="color: rgb(255 146 0);">Enroll in a New Course</h3>
+                <form action="{% url 'enroll_course' %}" method="post">
+                    {% csrf_token %}
+                    <label for="course">Select Course:</label>
+                    <select name="subject" id="course">
+                        {% for subject in available_subjects %}
+                        <option value="{{ subject.id }}">{{ subject.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Enroll</button>
+                </form>
+            </div>
+            
+        </div>
+
+    </div>
+        <!-- ***********Question Bank Section  end************************** -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2024 OnlineExam. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/student_dashboard.js' %}"></script>
+</body>
+
+</html>
